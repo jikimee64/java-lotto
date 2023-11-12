@@ -10,14 +10,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InputTest {
+class CalculatorInputProcessorTest {
 
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("실패 - 입력 값이 null이거나 빈 공백 문자일 경우 예외가 발생한다.")
     void fail_input_null_or_empty(String text) {
         // given & when & then
-        Assertions.assertThatThrownBy(() -> new Input(text))
+        Assertions.assertThatThrownBy(() -> new CalculatorInputProcessor(text))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력 값이 null이거나 빈 공백 문자일 수 없습니다.");
     }
@@ -29,7 +29,7 @@ class InputTest {
         String text = "2 + 3 * 4 / 2";
 
         // when & then
-        assertThat(new Input(text)).as("사칙 연산 기호가 모두 존재하면 예외가 발생하지 않는다.");
+        assertThat(new CalculatorInputProcessor(text)).as("사칙 연산 기호가 모두 존재하면 예외가 발생하지 않는다.");
     }
 
     @Test
@@ -39,7 +39,7 @@ class InputTest {
         String text = "2 + 3 * 4 ? 2";
 
         // when & then
-        Assertions.assertThatThrownBy(() -> new Input(text))
+        Assertions.assertThatThrownBy(() -> new CalculatorInputProcessor(text))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("사칙연산 기호만 사용 가능합니다.");
     }
@@ -51,8 +51,8 @@ class InputTest {
         String text = "2 + 3 * 4 / 2";
 
         // when
-        Input input = new Input(text);
-        List<Integer> numbers = input.extractNumber();
+        CalculatorInputProcessor calculatorInputProcessor = new CalculatorInputProcessor(text);
+        List<Integer> numbers = calculatorInputProcessor.extractNumber();
 
         // then
         assertThat(numbers).hasSize(4)
@@ -65,8 +65,8 @@ class InputTest {
         // given
         String text = "2 + 3 * 4 / 2";
 
-        Input input = new Input(text);
-        List<String> operators = input.extractOperator();
+        CalculatorInputProcessor calculatorInputProcessor = new CalculatorInputProcessor(text);
+        List<String> operators = calculatorInputProcessor.extractOperator();
 
         // when & then
 

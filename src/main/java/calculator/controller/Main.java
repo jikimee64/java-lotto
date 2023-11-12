@@ -1,7 +1,7 @@
 package calculator.controller;
 
 import calculator.domain.Calculator;
-import calculator.domain.Input;
+import calculator.domain.CalculatorInputProcessor;
 import calculator.ui.InputView;
 
 import java.util.List;
@@ -13,9 +13,9 @@ public class Main {
         InputView inputView = new InputView(new Scanner(System.in));
         String inputText = inputView.text();
 
-        Input input = new Input(inputText);
-        List<String> operators = input.extractOperator();
-        List<Integer> numbers = input.extractNumber();
+        CalculatorInputProcessor calculatorInputProcessor = new CalculatorInputProcessor(inputText);
+        List<String> operators = calculatorInputProcessor.extractOperator();
+        List<Integer> numbers = calculatorInputProcessor.extractNumber();
 
         Calculator calculator = new Calculator();
         System.out.println("계산 결과 " + calculator.calculate(operators, numbers));

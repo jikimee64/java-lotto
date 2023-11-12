@@ -23,17 +23,24 @@ public enum Operation {
     }
 
     public int apply(int x, int y) {
+        validateDivideZero(y);
         return operator.applyAsInt(x, y);
+    }
+
+    private void validateDivideZero(int y) {
+        if(this == DIVIDE && y == 0){
+            throw new IllegalArgumentException("나눗셈은 0으로 나눌 수 없습니다.");
+        }
     }
 
     public String getSymbol() {
         return symbol;
     }
 
-    public static Optional<Operation> fromString(String symbol) {
-        Map<String, Operation> stringToEnum = Stream.of(values())
-                .collect(toMap(Operation::getSymbol, Function.identity()));
+    private static Map<String, Operation> stringToEnum = Stream.of(values())
+            .collect(toMap(Operation::getSymbol, Function.identity()));
 
+    public static Optional<Operation> fromString(String symbol) {
         return Optional.ofNullable(stringToEnum.get(symbol));
     }
 

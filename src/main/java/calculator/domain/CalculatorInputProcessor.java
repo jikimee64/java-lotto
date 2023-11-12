@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class Input {
+public class CalculatorInputProcessor {
 
     private static final String REGEX_NUMBER = "[0-9]";
     private static final String REGEX_NOT_NUMBER = "[^0-9]";
@@ -17,7 +17,7 @@ public class Input {
 
     private final String text;
 
-    public Input(String text) {
+    public CalculatorInputProcessor(String text) {
         validateEmptyOrNull(text);
         validateArithmetic(text);
         this.text = text;
@@ -56,8 +56,8 @@ public class Input {
     }
 
     private String extractOperator(String text) {
-        return text.replaceAll(REGEX_NUMBER, "")
-                .replaceAll(BLANK, "");
+        return text.replaceAll(REGEX_NUMBER, EMPTY)
+                .replaceAll(BLANK, EMPTY);
     }
 
 }
